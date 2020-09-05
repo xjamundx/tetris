@@ -2,7 +2,6 @@ class Grid {
   constructor(width = 10, height = 20) {
     this.width = width;
     this.height = height;
-    console.log(this.width, this.height);
     this.fullReset();
   }
 

@@ -30,6 +30,7 @@ class Tetris {
   }
 
   restart() {
+    this.isPaused = false;
     this.grid.fullReset();
     if (this.gameOver) {
       document.getElementById("gameMessage").classList.add("hidden");
