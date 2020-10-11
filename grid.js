@@ -2,6 +2,8 @@ class Grid {
   constructor(width = 10, height = 20) {
     this.width = width;
     this.height = height;
+    this.board = null;
+    this.activeShape = null;
     this.fullReset();
   }
 
@@ -47,7 +49,23 @@ class Grid {
     if (this.activeShape && !this.activeShape.collided) {
       this.addShapeToGrid(this.activeShape, grid);
     }
+
+    this.highlightActiveColumns(this.activeShape, grid);
+
     return grid;
+  }
+
+  highlightActiveColumns(shape, grid) {
+    if (!shape) return;
+    for (let j = shape.x; j < shape.x + shape.width; j++) {
+      for (let i = 0; i < grid.length; i++) {
+        if (!grid[i][j]) {
+          grid[i][j] = { color: "#333" };
+        } else if (grid[i][j] !== shape) {
+          break;
+        }
+      }
+    }
   }
 
   // permanently add any shape to the grid

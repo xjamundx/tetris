@@ -17,6 +17,7 @@ class HTMLGrid {
       const rowDiv = document.createElement("div");
       rowDiv.className = "row";
       row.forEach((square) => {
+        console.log({ square });
         const squareDiv = document.createElement("div");
         squareDiv.className = "square";
         squareDiv.style.backgroundColor = square.color;

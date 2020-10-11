@@ -31,12 +31,14 @@ class Tetris {
 
   restart() {
     this.isPaused = false;
+    this.lines = 0;
     this.grid.fullReset();
     if (this.gameOver) {
       document.getElementById("gameMessage").classList.add("hidden");
       this.gameOver = false;
       this.tick();
     }
+    this.updatePoints();
     this.setupPreview();
     this.addPiece();
   }
@@ -90,6 +92,7 @@ class Tetris {
           shape.rotateRight();
         }
         break;
+      case "ArrowUp":
       case "KeyR":
         shape.rotateRight();
         // rotate, but then if we're colliding, immediately rotate back
