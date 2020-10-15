@@ -2,30 +2,28 @@ class HTMLGrid {
   constructor(grid, sel) {
     this.grid = grid;
     this.el = document.querySelector(sel);
+    this.setupBoard();
   }
-
-  replaceBoard(el) {
-    while (this.el.lastElementChild) {
-      this.el.removeChild(this.el.lastElementChild);
-    }
-    this.el.appendChild(el);
-  }
-
-  render() {
-    let dom = document.createDocumentFragment();
+  setupBoard() {
     this.grid.getBoardWithActiveShape().forEach((row) => {
       const rowDiv = document.createElement("div");
       rowDiv.className = "row";
-      row.forEach((square) => {
-        console.log({ square });
+      row.forEach(() => {
         const squareDiv = document.createElement("div");
         squareDiv.className = "square";
-        squareDiv.style.backgroundColor = square.color;
         rowDiv.appendChild(squareDiv);
       });
-      dom.appendChild(rowDiv);
+      this.el.appendChild(rowDiv);
     });
-    this.replaceBoard(dom);
+  }
+
+  render() {
+    this.grid.getBoardWithActiveShape().forEach((row, i) => {
+      row.forEach((square, j) => {
+        const squareDiv = this.el.children[i].children[j];
+        squareDiv.style.backgroundColor = square.color || "";
+      });
+    });
   }
 }
 
