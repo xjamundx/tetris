@@ -4,7 +4,7 @@ import HTMLGrid from "./htmlgrid.js";
 
 class Tetris {
   constructor() {
-    this.grid = new Grid();
+    this.grid = new Grid(10, 20);
     this.screen = new HTMLGrid(this.grid, "#grid");
     this.previewGrid = new Grid(4, 4);
     this.previewSection = new HTMLGrid(this.previewGrid, "#preview");

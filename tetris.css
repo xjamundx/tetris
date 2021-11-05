@@ -1,12 +1,20 @@
 * {
   box-sizing: border-box;
 }
+body {
+  background: #111;
+}
 
 .grid {
-  font-size: 26px;
+  font-size: 48px;
   height: 20em;
   width: 10em;
   background: #111;
+}
+
+.wrapper {
+  align-items: center;
+  justify-content: center;
 }
 
 .row {
