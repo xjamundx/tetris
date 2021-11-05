@@ -1,0 +1,8 @@
+{
+ "name": "Tetris 2D",
+ "display": "standalone",
+ "short_name": "Tetris 2D",
+ "start_url": "https://xjamundx.github.io/tetris/",
+ "scope": "https://xjamundx.github.io/",
+ "ovr_package_name": "com.company.app.pwa"
+ }
