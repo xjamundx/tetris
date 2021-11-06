@@ -13,20 +13,74 @@ class Tetris {
     this.lines = 0;
     this.isPaused = false;
     this.updatePoints();
+    const gridEl = document.getElementById("grid");
+
+    this.mouseIsDown = false;
+
+    gridEl.addEventListener("mousemove", this.trackMouseMovement.bind(this));
+    gridEl.addEventListener("mouseout", this.trackMouseMovement.bind(this));
+    gridEl.addEventListener("mousedown", this.startMove.bind(this));
+    gridEl.addEventListener("mouseup", this.trackMouseMovement.bind(this));
 
     document.addEventListener("keydown", (e) => this.handleKeypress(e));
     document
       .getElementById("restart")
       .addEventListener("click", (e) => this.restart(e));
-    document.getElementById("pause").addEventListener("click", (e) => {
-      this.isPaused = !this.isPaused;
-    });
+    document
+      .getElementById("pause")
+      .addEventListener("click", this.handlePause.bind(this));
 
     this.render();
     this.setupPreview();
     this.addPiece();
 
     this.tick();
+  }
+  trackMouseMovement(e) {
+    if (e.which !== 1) this.dragging = false;
+    if (this.dragging) {
+      const [x, y] = this.getCoordsFromClick(e);
+      this.currentShape.x = Math.min(
+        Math.max(0, x),
+        this.grid.width - this.currentShape.width
+      );
+    }
+  }
+
+  getCoordsFromClick(e) {
+    const parent = e.target.parentNode;
+    const x = Array.from(parent.childNodes).indexOf(e.target);
+    const y = Array.from(parent.parentNode.childNodes).indexOf(parent);
+    return [x, y];
+  }
+
+  startMove(e) {
+    // convert e.target (the actual div we clicked) into grid x,y coords
+    const [x, y] = this.getCoordsFromClick(e);
+    console.log("clicked on ", x, y);
+    console.log("current shape", this.currentShape);
+    let maybeX = false,
+      maybeY = false;
+    if (
+      x >= this.currentShape.x &&
+      x <= this.currentShape.x + this.currentShape.width
+    ) {
+      maybeX = true;
+    }
+    if (
+      y >= this.currentShape.y &&
+      y <= this.currentShape.y + this.currentShape.height
+    ) {
+      maybeY = true;
+    }
+    if (maybeX && maybeY) {
+      this.dragging = true;
+    }
+  }
+
+  handlePause(e) {
+    this.isPaused = !this.isPaused;
+    e.target.classList.toggle("paused", this.isPaused);
   }
 
   restart() {
